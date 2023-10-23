@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaLink, FaTwitter } from "react-icons/fa";
 import axios from "axios";
 import { UsersData } from "@/models/UserInterface";
 import { formatCreatedDate } from "@/config/DateFormat";
@@ -65,16 +67,63 @@ const SingleUser = () => {
 								</h6>
 								<p className="text-blue-600">{user.login}</p>
 							</div>
-							<p className="text-sm">{formatCreatedDate(user.created_at)}</p>
+							<p className="text-sm">
+								Joined {formatCreatedDate(user.created_at)}
+							</p>
+						</div>
+						<div className="my-8">
+							<a
+								href={user.html_url}
+								target="_blank"
+								rel="noreferreer"
+								className="rounded-md p-4 border uppercase hover:cursor-pointer hover:bg-slate-900"
+							>
+								Visit github Profile
+							</a>
 						</div>
 						<div className="mt-4 text-md">
 							{user.bio ? <p>{user.bio}</p> : <p>This user has no bio</p>}
 						</div>
-						<div>
-							<div>
+						<div className="flex justify-center items-center bg-slate-900 text-center py-4 rounded-md mt-8 text-white">
+							<div className="w-1/3">
 								<p>Repos</p>
 								<p>{user.public_repos}</p>
 							</div>
+							<div className="w-1/3">
+								<p>followers</p>
+								<p>{user.followers}</p>
+							</div>
+							<div className="w-1/2">
+								<p>following</p>
+								<p>{user.following}</p>
+							</div>
+						</div>
+						<div className="w-full py-2 px-4 mt-4">
+							<ul className="flex w-full flex-col items-center justify-between md:flex-row">
+								<li className="flex justify-center items-center w-full md:border-r md:w-1/3">
+									<FaLocationDot /> <p className="ml-2">{user.location}</p>
+								</li>
+								<li className="flex justify-center items-center w-full md:border-r md:w-1/3">
+									<FaLink />{" "}
+									<a
+										href={`https://${user.blog}`}
+										target="_blank"
+										className="ml-2"
+									>
+										{user.blog}
+									</a>
+								</li>
+								<li className="flex justify-center items-center w-full md:w-1/3">
+									<FaTwitter />{" "}
+									<a
+										href={`https://twitter.com/${user.twitter_username}`}
+										target="_blank"
+										className="ml-2"
+									>
+										{user.twitter_username}
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
