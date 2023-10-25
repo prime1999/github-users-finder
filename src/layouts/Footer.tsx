@@ -1,5 +1,3 @@
-import React from "react";
-
 const Footer = () => {
 	return (
 		<div className="text-center text-sm mt-4 text-slate-600 font-semibold">

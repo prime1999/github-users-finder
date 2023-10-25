@@ -1,18 +1,16 @@
-import { UsersData } from "@/models/UserInterface";
 import { Link } from "react-router-dom";
 import Loader from "@/components/Loader";
+import { useGithub } from "@/contexts/GithubContext";
 
-type Props = {
-	users: UsersData[];
-	isLoading: boolean;
-};
-const UsersList = ({ users, isLoading }: Props) => {
+const UsersList = () => {
+	const { state } = useGithub();
+	console.log(state.users);
 	return (
 		<div className="flex justify-center items-center 500 w-10/12 mx-auto">
 			<div className="flex flex-wrap justify-center mx-auto h-[400px] mt-4 p-4 w-full overflow-auto">
-				{isLoading && <Loader />}
-				{users &&
-					users.map((user) => (
+				{state.isLoading && <Loader />}
+				{state.users &&
+					state.users.map((user) => (
 						<Link
 							to={`/user/${user.login}`}
 							key={user.id}

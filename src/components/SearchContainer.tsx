@@ -1,42 +1,18 @@
 import { FormEvent, useState } from "react";
-import axios from "axios";
-import { UsersData } from "@/models/UserInterface";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import { useGithub } from "@/contexts/GithubContext";
+import { searchUsers } from "./GithubActions";
 
-type Props = {
-	setUsers: React.Dispatch<React.SetStateAction<UsersData[]>>;
-	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const SearchContainer = ({ setUsers, setIsLoading }: Props) => {
+const SearchContainer = () => {
+	const { dispatch } = useGithub();
 	const [text, setText] = useState<string>("");
 
-	const GITHUB_URL = import.meta.env.VITE_REACT_APP_GITHUB_URL;
-	const GITHUB_TOKEN = import.meta.env.VITE_REACT_APP_GITHUB_TOKEN;
-
-	//function to search users
-	const searchUsers = async (text: string) => {
-		setIsLoading(true);
-		const github = axios.create({
-			baseURL: GITHUB_URL,
-			headers: { Authorization: `token ${GITHUB_TOKEN}` },
-		});
-		//making the text a query to get a user based on it
-		const params = new URLSearchParams({
-			q: text,
-		});
-
-		const res = await github.get(`${GITHUB_URL}/search/users?${params}`);
-
-		const { items } = await res.data;
-		console.log(items);
-		setUsers(items);
-		setIsLoading(false);
-	};
-
-	const handleSearch = (e: FormEvent) => {
+	const handleSearch = async (e: FormEvent) => {
 		e.preventDefault();
-		searchUsers(text);
+		dispatch({ type: "SET_LOADING" });
+
+		const users = await searchUsers(text);
+		dispatch({ type: "SEARCH_USER", payload: users });
 	};
 
 	return (

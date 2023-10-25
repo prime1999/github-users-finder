@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Home from "./pages/Home";
 import SingleUser from "./pages/SingleUser";
 import RootLayout from "./layouts/RootLayout";
+import { GithubProvider } from "./contexts/GithubContext";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -23,7 +24,9 @@ const router = createBrowserRouter(
 const App = () => {
 	return (
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-			<RouterProvider router={router} />
+			<GithubProvider>
+				<RouterProvider router={router} />
+			</GithubProvider>
 		</ThemeProvider>
 	);
 };
