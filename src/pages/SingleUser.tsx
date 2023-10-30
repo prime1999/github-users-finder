@@ -93,7 +93,7 @@ const SingleUser = () => {
 										<FaLocationDot />{" "}
 										<p className="ml-2">{state.user.location}</p>
 									</li>
-									<li className="flex justify-center items-center w-full md:border-r md:w-1/3">
+									<li className="flex justify-center items-center w-full md:border-r md:w-1/2">
 										<FaLink />{" "}
 										<a
 											href={`https://${state.user.blog}`}
